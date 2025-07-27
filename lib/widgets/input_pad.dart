@@ -27,23 +27,20 @@ class _InputPadState extends State<InputPad> {
   static const int columns = 5;
   static const int totalButtons = rows * columns;
 
+
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8.0),
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: columns,
-          crossAxisSpacing: 4.0,
-          mainAxisSpacing: 4.0,
-          childAspectRatio: 1.0,
-        ),
-        itemCount: totalButtons,
-        itemBuilder: (context, index) {
+      child: GridView.count(
+        crossAxisCount: columns, 
+        crossAxisSpacing: 4.0, // Horizontal space.
+        mainAxisSpacing: 4.0, // Vertical space.
+        childAspectRatio: 2.0, // = Horizontal / Vertical.
+        // All items are listed here.
+        children: List.generate(totalButtons, (index) {
           return _buildButton(index);
-        },
+        }),
       ),
     );
   }
