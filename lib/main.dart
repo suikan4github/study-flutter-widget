@@ -30,10 +30,10 @@ class InputPadDemo extends StatefulWidget {
 
 class _InputPadDemoState extends State<InputPadDemo> {
   String _inputText = '';
-  List<String> _currentCharacters = InputPadPresets.hanziOnset;
+  List<List<String>> _currentCharacters = InputPadPresets.hanziOnset;
   String _currentPreset = 'Hanzi Onset';
 
-  final Map<String, List<String>> _presets = {
+  final Map<String, List<List<String>>> _presets = {
     'Alphabet': InputPadPresets.alphabet,
     'Hanzi Onset': InputPadPresets.hanziOnset,
   };
@@ -62,43 +62,6 @@ class _InputPadDemoState extends State<InputPadDemo> {
     });
   }
 
-  void _loadCustomCharacters() {
-    // Dialog for entering custom character string
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        String customInput = '';
-        return AlertDialog(
-          title: const Text('Custom Character Set'),
-          content: TextField(
-            onChanged: (value) => customInput = value,
-            decoration: const InputDecoration(
-              hintText: 'Enter characters separated by comma (,) within 35 characters',
-              border: OutlineInputBorder(),
-            ),
-            maxLength: 35,
-            maxLines: 3,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  _currentCharacters = customInput.split(',');
-                  _currentPreset = 'Custom';
-                });
-                Navigator.of(context).pop();
-              },
-              child: const Text('Apply'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -166,14 +129,6 @@ class _InputPadDemoState extends State<InputPadDemo> {
                       }).toList(),
                     ),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: _loadCustomCharacters,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    foregroundColor: Colors.white,
-                  ),
-                  child: const Text('Custom'),
                 ),
               ],
             ),
