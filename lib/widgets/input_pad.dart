@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
 
 class InputPad extends StatefulWidget {
-  final List<List<String>> characters;
-  final Function(String) onCharacterTap;
-  final Color? buttonColor;
-  final Color? textColor;
-  final double? buttonSize;
-  final double? fontSize;
+  final List<List<String>> _characters;
+  final List<List<bool>> _buttonEnabled;
+  final Function(String) _onCharacterTap;
+  final Color? _buttonColor;
+  final Color? _textColor;
+  final double? _buttonSize;
+  final double? _fontSize;
 
   const InputPad({
     super.key,
-    required this.characters,
-    required this.onCharacterTap,
-    this.buttonColor,
-    this.textColor,
-    this.buttonSize,
-    this.fontSize,
-  });
+    required List<List<String>> characters,
+    required List<List<bool>> buttonEnabled,
+    required dynamic Function(String) onCharacterTap,
+    Color? buttonColor,
+    Color? textColor,
+    double? buttonSize,
+    double? fontSize,
+  }) : _onCharacterTap = onCharacterTap,
+       _fontSize = fontSize,
+       _buttonSize = buttonSize,
+       _textColor = textColor,
+       _buttonColor = buttonColor,
+       _characters = characters,
+       _buttonEnabled = buttonEnabled;
 
   @override
   State<InputPad> createState() => _InputPadState();
@@ -47,20 +55,20 @@ class _InputPadState extends State<InputPad> {
   Widget _buildButton(int index) {
     // Display character if index exists in character array, otherwise empty string
     final character = index < columns * rows
-        ? widget.characters[index ~/ columns][index % columns]
+        ? widget._characters[index ~/ columns][index % columns]
         : '';
 
     return Material(
-      color: widget.buttonColor ?? Colors.blue.shade100,
+      color: widget._buttonColor ?? Colors.blue.shade100,
       borderRadius: BorderRadius.circular(8.0),
       child: InkWell(
         borderRadius: BorderRadius.circular(8.0),
         onTap: character.isNotEmpty
-            ? () => widget.onCharacterTap(character)
+            ? () => widget._onCharacterTap(character)
             : null,
         child: Container(
-          width: widget.buttonSize ?? 60.0,
-          height: widget.buttonSize ?? 60.0,
+          width: widget._buttonSize ?? 60.0,
+          height: widget._buttonSize ?? 60.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
             border: Border.all(color: Colors.grey.shade300, width: 1.0),
@@ -69,9 +77,9 @@ class _InputPadState extends State<InputPad> {
             child: Text(
               character,
               style: TextStyle(
-                fontSize: widget.fontSize ?? 18.0,
+                fontSize: widget._fontSize ?? 18.0,
                 fontWeight: FontWeight.w500,
-                color: widget.textColor ?? Colors.black87,
+                color: widget._textColor ?? Colors.black87,
               ),
             ),
           ),
@@ -102,5 +110,27 @@ class InputPadPresets {
     ['', 'c', 'ch', 'q', ''],
     ['f', 's', 'sh', 'x', 'h'],
     ['', 'l', 'r', '', ''],
+  ];
+
+  // Mask for all enabled buttons.
+  static const List<List<bool>> allEnabledMask = [
+    [true, true, true, true, true],
+    [true, true, true, true, true],
+    [true, true, true, true, true],
+    [true, true, true, true, true],
+    [true, true, true, true, true],
+    [true, true, true, true, true],
+    [true, true, true, true, true],
+  ];
+
+  // Mask for Hanzi onset.
+  static const List<List<bool>> defaultHanziMask = [
+    [true, true, false, false, true],
+    [true, true, false, false, true],
+    [true, true, false, false, false],
+    [false, true, true, true, false],
+    [false, true, true, true, false],
+    [true, true, true, true, true],
+    [false, true, true, false, false],
   ];
 }

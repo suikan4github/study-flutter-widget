@@ -143,6 +143,7 @@ class _InputPadDemoState extends State<InputPadDemo> {
                   padding: const EdgeInsets.all(8.0),
                   child: InputPad(
                     characters: _currentCharacters,
+                    buttonEnabled: InputPadPresets.allEnabledMask,
                     onCharacterTap: _onCharacterTap,
                     buttonColor: Colors.blue.shade50,
                     textColor: Colors.black87,

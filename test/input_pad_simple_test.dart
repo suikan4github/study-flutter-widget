@@ -24,6 +24,7 @@ void main() {
               width: 400,
               child: InputPad(
                 characters: testCharacters,
+                buttonEnabled: InputPadPresets.allEnabledMask,
                 onCharacterTap: (character) {},
               ),
             ),
@@ -63,6 +64,7 @@ void main() {
               width: 400,
               child: InputPad(
                 characters: testCharacters,
+                buttonEnabled: InputPadPresets.allEnabledMask,
                 onCharacterTap: (character) {
                   tappedCharacter = character;
                 },
@@ -107,6 +109,7 @@ void main() {
               width: 400,
               child: InputPad(
                 characters: testCharacters,
+                buttonEnabled: InputPadPresets.allEnabledMask,
                 onCharacterTap: (character) {},
                 buttonColor: Colors.red,
                 textColor: customTextColor,
@@ -142,6 +145,7 @@ void main() {
               width: 400,
               child: InputPad(
                 characters: testCharacters,
+                buttonEnabled: InputPadPresets.allEnabledMask,
                 onCharacterTap: (character) {},
               ),
             ),
