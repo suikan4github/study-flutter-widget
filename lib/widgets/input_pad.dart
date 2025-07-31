@@ -58,12 +58,17 @@ class _InputPadState extends State<InputPad> {
         ? widget._characters[index ~/ columns][index % columns]
         : '';
 
+    // Check if the button is enabled
+    final isEnabled = index < columns * rows
+        ? widget._buttonEnabled[index ~/ columns][index % columns]
+        : false;
+
     return Material(
       color: widget._buttonColor ?? Colors.blue.shade100,
       borderRadius: BorderRadius.circular(8.0),
       child: InkWell(
         borderRadius: BorderRadius.circular(8.0),
-        onTap: character.isNotEmpty
+        onTap: character.isNotEmpty && isEnabled
             ? () => widget._onCharacterTap(character)
             : null,
         child: Container(
@@ -79,7 +84,9 @@ class _InputPadState extends State<InputPad> {
               style: TextStyle(
                 fontSize: widget._fontSize ?? 18.0,
                 fontWeight: FontWeight.w500,
-                color: widget._textColor ?? Colors.black87,
+                color: isEnabled
+                    ? widget._textColor ?? Colors.black
+                    : Colors.grey.shade400,
               ),
             ),
           ),
